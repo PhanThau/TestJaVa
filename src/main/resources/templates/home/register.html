@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            /*background: url('your-background-image.jpg') no-repeat center center fixed;*/
+            background-size: cover;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Make the container full height of the viewport */
+        }
+        .form-register {
+            max-width: 500px; /* Increased max-width */
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-register-heading {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            background-color: #528B8B;
+            border: none;
+            color: white;
+        }
+        .btn-block:hover {
+            background-color: #528B8B;
+        }
+        .register-quick {
+            text-align: center;
+            color: #528B8B;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+        .register-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none; /* Remove the default underline */
+            background-color: #79CDCD;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 20px;
+        }
+        .register-button:hover {
+            background-color: #79CDCD;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form class="form-register" th:action="@{/process_register}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <h2 class="register-quick">REGISTER QUICK</h2>
+        <input  placeholder="E-mail" class="form-control" type="text" th:field="*{email}"/>
+        <input class="form-control" type="password" th:field="*{password}" placeholder="Password" required />
+        <input class="form-control" type="password" id="confirm-password" placeholder="Confirm Password" required />
+
+        <input class="form-control" type="text" th:field="*{username}" placeholder="Username"/>
+        <input class="form-control" type="file" name ="image" accept ="image/png,image/jpeg"/>
+        <label for="show-password-checkbox">
+            <input type="checkbox" id="show-password-checkbox"> Show Password
+        </label>
+        <button class="btn btn-lg btn-block" type="submit">Register</button>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    const passwordField = document.getElementById("password");
+    const confirmPasswordField = document.getElementById("confirm-password");
+    const showPasswordCheckbox = document.getElementById("show-password-checkbox");
+
+    showPasswordCheckbox.addEventListener("change", function () {
+        if (showPasswordCheckbox.checked) {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+        }
+    });
+
+    const form = document.querySelector(".form-register");
+
+    form.addEventListener("submit", function (event) {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match. Please try again.");
+            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu mật khẩu không khớp
+        }
+    });
+</script>

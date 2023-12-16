@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Verify Form</h2>
+
+    <form action="/verify" method="POST" class="mt-4">
+        <div th:if="${error != null}" class="alert alert-danger">
+            <p class="mb-0">[[${error}]]</p>
+        </div>
+        <div th:if="${message != null}" class="alert alert-success">
+            <p class="mb-0">[[${message}]]</p>
+            <a href="/login" class="btn btn-primary mt-3">Login</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
