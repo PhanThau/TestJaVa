@@ -17,7 +17,7 @@ import doanjava1com.example.demo1.Repositories.ClothRepository;
 @Service
 @Transactional
 public class ClothServices {
-    int pageSize = 10;
+    int pageSize = 12;
     @Autowired
     private ClothRepository clothRepository;
 
