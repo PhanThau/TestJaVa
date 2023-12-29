@@ -46,8 +46,14 @@
         private ClothServices clothServices;
         @Autowired
         private CartService cartService;
+//        @GetMapping
+//        public String viewHomePage(Model model) {
+//            return viewAllBook(model, 1, "id", "asc", " ");
+//        }
+
         @GetMapping
         public String viewHomePage(Model model) {
+            model.addAttribute("categories", categoryService.listAll());
             return viewAllBook(model, 1, "id", "asc", " ");
         }
 
@@ -55,9 +61,12 @@
         public String viewAllBook(Model model, @PathVariable(name = "pageNum") int pageNum,
                                   @Param("sortField") String sortField, @Param("sortType") String sortType,
                                   @Param("keyword") String keyword) {
-            sortField = sortField==null?"id":sortField;
-            sortType = sortType==null?"asc":sortType;
-            //String trimmedKeyword = keyword.trim();
+            sortField = sortField == null ? "id" : sortField;
+            sortType = sortType == null ? "asc" : sortType;
+
+            // Make sure to include the categories attribute in the model
+            model.addAttribute("categories", categoryService.listAll());
+
             Page<Cloth> page = clothServices.listAllWithOutDelete(pageNum, sortField, sortType, keyword);
             List<Cloth> listCloth = page.getContent();
             model.addAttribute("currentPage", pageNum);
@@ -70,6 +79,7 @@
             model.addAttribute("clothes", listCloth);
             return "cloth/index";
         }
+
 
 
         @Autowired
@@ -163,6 +173,28 @@
             cartService.updateCart(session, cart);
             return "redirect:/clothes";
         }
+        @GetMapping("/category")
+        public String viewClothesByCategory(@RequestParam(name = "categoryId") Long categoryId, Model model) {
+            // Thực hiện lấy danh sách sản phẩm theo loại
+            Page<Cloth> page = clothServices.listByCategory(categoryId, 1, "id", "asc");
+            List<Cloth> listCloth = page.getContent();
+
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+            model.addAttribute("sortField", "id");
+            model.addAttribute("sortType", "asc");
+            model.addAttribute("reverseSortType", "desc");
+            model.addAttribute("categoryId", categoryId);
+            model.addAttribute("clothes", listCloth);
+
+            // Make sure to include the categories attribute in the model
+            model.addAttribute("categories", categoryService.listAll());
+
+            return "cloth/index";
+        }
+
+
         @GetMapping("/category/{categoryId}")
         public String viewClothesByCategory(Model model, @PathVariable(name = "categoryId") Long categoryId,
                                             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,

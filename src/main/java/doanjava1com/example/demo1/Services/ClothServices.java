@@ -62,7 +62,9 @@ public class ClothServices {
         }
 
         // Thực hiện lấy danh sách sản phẩm theo loại
-        return clothRepository.findByCategory(category, PageRequest.of(pageNum - 1, pageSize, getSort(sortField, sortType)));
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortType.equals("asc") ? sortField : sortField).descending());
+        return clothRepository.findByCategory(category, pageable);
     }
+
 
 }

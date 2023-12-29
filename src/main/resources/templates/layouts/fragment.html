@@ -66,6 +66,11 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clothes">Sản phẩm</a></li>
+                    <form th:action="@{/clothes/category}" method="get">
+                        <select name="categoryId" onchange="this.form.submit()">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </form>
                     <li class="nav-item"><a class="nav-link" href="/categories">Loại sản phẩm</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Chức vụ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/users">Người dùng</a></li>
