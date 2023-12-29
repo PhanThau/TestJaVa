@@ -2,12 +2,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <head th:insert="layout/fragment.html::header">
     <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
+    <title>Sport Shop</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+
+        .nav-link {
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ffd700;
+        }
+
+        .btn-outline-dark {
+            border-color: #007bff;
+            color: #007bff;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 <div th:fragment="header">
@@ -22,7 +63,7 @@
             </button>
 
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mx-auto"> <!-- Thêm lớp mx-auto để canh giữa -->
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clothes">Sản phẩm</a></li>
                     <li class="nav-item"><a class="nav-link" href="/categories">Loại sản phẩm</a></li>
@@ -33,12 +74,10 @@
                 <ul class="nav navbar-nav flex-row justify-content-between ms-auto">
                     <li>
                         <div sec:authorize="isAuthenticated()">
-                            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}"
-                                  method="post">
+                            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
                                 <div class="input-group">
                                     <a class="nav-link" href="#" sec:authentication="name">Username</a>
-                                    <input class="btn btn-outline-dark" type="submit"
-                                           value="Logout" />
+                                    <input class="btn btn-outline-dark" type="submit" value="Logout" />
                                 </div>
                             </form>
                         </div>

@@ -15,7 +15,7 @@ public class Category {
     @Column(name = "description",nullable = true,length = 255)
     private String description;
     @OneToMany(mappedBy = "category")
-    private List<Cloth> books;
+    private List<Cloth> zbooks;
 
     public Long getId() {
         return id;
