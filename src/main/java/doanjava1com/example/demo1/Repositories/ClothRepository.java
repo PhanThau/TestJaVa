@@ -1,5 +1,6 @@
 package doanjava1com.example.demo1.Repositories;
 
+import doanjava1com.example.demo1.Models.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,7 @@ public interface ClothRepository extends JpaRepository<Cloth, Long> {
     void deleteBookById(long id);
     @Query("SELECT b FROM Cloth b WHERE CONCAT(b.title, ' ', ' ', b.category.name, ' ', b.price) LIKE %:keyword% AND b.isdeleted = false")
     public Page<Cloth> Search(Pageable page, @Param("keyword") String keyword);
+
+    Page<Cloth> findByCategory(Category category, Pageable pageable);
 
 }

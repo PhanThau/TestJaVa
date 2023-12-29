@@ -109,6 +109,9 @@
                 <div sec:authorize="hasAnyAuthority('CREATER','ADMIN')">
                     <a href="clothes/new" class="btn btn-success create-btn">Create New Cloth</a>
                 </div>
+                <!-- Trong index.html ho?c trang hi?n th? s?n ph?m -->
+                <a th:href="@{/clothes/category/{categoryId}(categoryId=${categoryId})}">Xem s?n ph?m theo lo?i</a>
+
             </div>
         </div>
     </div>

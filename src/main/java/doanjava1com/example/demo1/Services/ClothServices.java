@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import doanjava1com.example.demo1.Models.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +20,16 @@ import doanjava1com.example.demo1.Repositories.ClothRepository;
 public class ClothServices {
     int pageSize = 12;
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private ClothRepository clothRepository;
 
     public Page<Cloth> listAll(int pageNum) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         return clothRepository.findAll(pageable);
+    }
+    public Sort getSort(String sortField, String sortType) {
+        return sortType.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
     }
 
     public Page<Cloth> listAllWithOutDelete(int pageNum, String sortField, String sortType, String keyword) {
@@ -47,4 +53,16 @@ public class ClothServices {
     public void delete(long id) {
         clothRepository.deleteById(id);
     }
+    // Trong ClothServices.java
+    public Page<Cloth> listByCategory(Long categoryId, int pageNum, String sortField, String sortType) {
+        Category category = categoryService.get(categoryId);
+        if (category == null) {
+            // Xử lý khi không tìm thấy loại category
+            return Page.empty();
+        }
+
+        // Thực hiện lấy danh sách sản phẩm theo loại
+        return clothRepository.findByCategory(category, PageRequest.of(pageNum - 1, pageSize, getSort(sortField, sortType)));
+    }
+
 }
