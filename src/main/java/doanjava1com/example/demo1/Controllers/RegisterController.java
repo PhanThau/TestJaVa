@@ -40,7 +40,8 @@ public class RegisterController {
         return"home/register";
     }
     @PostMapping("/process_register")
-    public String processRegister(User user, @RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException, Exception {
+    public String processRegister(User user, @RequestParam("image") MultipartFile multipartFile, HttpServletRequest request)
+            throws UnsupportedEncodingException, MessagingException, Exception {
         String encodePassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodePassword);
         user.addRoles(roleService.getbyName("USER"));

@@ -24,6 +24,15 @@ public class ClothServices {
     @Autowired
     private ClothRepository clothRepository;
 
+    public Page<Cloth> searchClothes(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        // Trường hợp không có từ khóa, bạn có thể chọn sử dụng findWithOutDelete hoặc Search với từ khóa rỗng
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return clothRepository.findWithOutDelete(pageable);
+        }
+        // Sử dụng phương thức Search cho tất cả các trường hợp khác
+        return clothRepository.Search(pageable, keyword);
+    }
     public Page<Cloth> listAll(int pageNum) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         return clothRepository.findAll(pageable);
